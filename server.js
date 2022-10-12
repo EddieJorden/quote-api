@@ -38,6 +38,20 @@ app.get(`/api/quotes`, (req, res) => {
 	}
 });
 
+app.post('/api/quotes', (req, res) => {
+	const query = req.query;
+	const newQuote = {
+		quote: query,
+	};
+	if (query.quote === '' || query.person === '') {
+		console.log(query);
+		res.status(400);
+	} else {
+		quotes.push(query);
+		res.send(newQuote);
+	}
+});
+
 const PORT = process.env.PORT || 4001;
 
 app.use(express.static('public'));
