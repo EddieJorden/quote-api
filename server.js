@@ -13,6 +13,31 @@ app.get(`/api/quotes/random`, (req, res) => {
 	res.send(quote);
 });
 
+app.get(`/api/quotes`, (req, res) => {
+	const query = req.query.person;
+	const allQuotes = {
+		quotes: quotes,
+	};
+	const quotesByAuthor = {
+		quotes: [],
+	};
+	console.log({ query });
+	// let quotesByAuthor = [];
+	if (query === '') {
+		console.log('sending', allQuotes);
+		res.send(allQuotes);
+	}
+	if (query !== '') {
+		quotes.forEach((quote) => {
+			if (quote.person === query) {
+				quotesByAuthor.quotes.push(quote);
+			}
+		});
+		console.log('sending', quotesByAuthor);
+		res.send(quotesByAuthor);
+	}
+});
+
 const PORT = process.env.PORT || 4001;
 
 app.use(express.static('public'));
